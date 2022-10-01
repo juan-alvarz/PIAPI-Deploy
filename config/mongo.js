@@ -14,6 +14,7 @@ const dbConnect = () => {
         console.log("**CONNECTED WITH ATLAS SUCCESFULLY**");
       } else {
         console.log("**CONNECTION ERROR**");
+        console.log(err);
       }
     }
   );
