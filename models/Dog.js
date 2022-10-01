@@ -1,8 +1,6 @@
-import { DogI } from "../types";
-
 const { Schema, model } = require("mongoose");
 
-const DogSchema: DogI = new Schema(
+const DogSchema = new Schema(
   {
     name: {
       type: String,
@@ -41,4 +39,4 @@ const DogSchema: DogI = new Schema(
 );
 
 const DogModel = model("Dog", DogSchema);
-export = DogModel;
+module.exports = DogModel;

@@ -1,16 +1,17 @@
-import DogModel from "../models/Dog";
-import { DogI } from "../types";
-require("dotenv").config();
+const { dogModel } = require("../models/index.js");
+const DogModel = require("../models/Dog.js");
 const axios = require("axios");
 const { MY_APPI_KEY } = process.env;
 
-export const getDogs = async (req: any, res: any) => {
+require("dotenv").config();
+
+// obtain dogs, by name, and general
+const getDogs = async (req, res) => {
   try {
-    const data: DogI[] = await DogModel.find({});
-    const nameDog: string | undefined =
-      req.query.name !== undefined ? req.query.name : undefined;
+    const data = await DogModel.find({});
+    const nameDog = req.query.name !== undefined ? req.query.name : undefined;
     if (nameDog !== undefined) {
-      const dogByName: DogI = await DogModel.find({
+      const dogByName = await DogModel.find({
         name: { $regex: ".*" + nameDog + ".*", $options: "<i>" },
       });
       if (!dogByName) {
@@ -20,15 +21,15 @@ export const getDogs = async (req: any, res: any) => {
     }
     return res.status(200).json(data);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
-export const getDogById = async (req: any, res: any) => {
+const getDogById = async (req, res) => {
   try {
     const { id } = req.params;
     if (id) {
-      const dogById: DogI = await DogModel.find({ _id: id });
+      const dogById = await DogModel.find({ _id: id });
       if (Object.keys(dogById).length === 0) {
         return res.status(404).json({ message: "inexistent id" });
       }
@@ -36,11 +37,11 @@ export const getDogById = async (req: any, res: any) => {
     }
     return res.status(400).json({ message: "id is required" });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
-export const createDog = async (req: any, res: any) => {
+const createDog = async (req, res) => {
   try {
     const { name, height, weight, lifeSpan, temperament, image } = req.body;
     const newDog = new DogModel({
@@ -59,7 +60,7 @@ export const createDog = async (req: any, res: any) => {
   }
 };
 
-export const deleteDog = async (req: any, res: any) => {
+const deleteDog = async (req, res) => {
   const { id } = req.params;
   try {
     const { id } = req.params;
@@ -71,8 +72,16 @@ export const deleteDog = async (req: any, res: any) => {
       await DogModel.deleteOne({ _id: id });
       return res.status(200).json(dogById);
     }
+
     return res.status(400).json({ message: "id is required" });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
+};
+
+module.exports = {
+  getDogs,
+  getDogById,
+  createDog,
+  deleteDog,
 };
