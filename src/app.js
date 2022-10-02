@@ -8,6 +8,7 @@ const { PORT } = require("./config/softcredentials.js");
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 /* app.use(
   cors({
     origin: URL_API,
