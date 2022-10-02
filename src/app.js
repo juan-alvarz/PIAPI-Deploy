@@ -19,6 +19,7 @@ const port = PORT || 3001;
 
 //app.use("/", require("./routes"));
 app.use("/dogs", require("./routes/dogs.js"));
+app.use("/temp", require("./routes/temp.js"));
 
 app.listen(port, () => console.log(`%s listening on port: ${port}`));
 
