@@ -16,7 +16,8 @@ app.use(express.json());
 
 const port = process.env.PORT || 3001;
 
-app.use("/", require("./routes"));
+//app.use("/", require("./routes"));
+app.use("/doggys", require("./routes/dogs.js"));
 
 app.listen(port, () => console.log(`%s listening on port: ${port}`));
 
